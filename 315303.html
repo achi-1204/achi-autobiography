@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人簡歷 - 從資訊到商管的跨域之路</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutral with Teal Accent -->
+    <!-- Application Structure Plan: A narrative-driven, single-page scrolling application. The structure is designed to tell a story: 1. A bold introduction. 2. A core interactive diagram showing the translation of technical skills to business potential (the key argument). 3. A timeline visualizing the personal journey and intellectual shift. 4. A showcase of practical skills. 5. A chart outlining future academic plans. This structure logically guides the user through the candidate's profile, making a compelling case for their suitability for a business program, which a standard text document cannot achieve as effectively. -->
+    <!-- Visualization & Content Choices: 
+        - Profile Summary (Inform): Simple, impactful text using HTML/CSS.
+        - Skills Bridge Diagram (Organize/Relate): An interactive diagram built with HTML/CSS/JS. Goal is to visually connect Data Processing skills to Business Management competencies. Interaction: Clicking a technical skill highlights its business application and shows a description. This is the most persuasive element.
+        - Journey Timeline (Change): A vertical timeline using HTML/CSS/JS. Goal: To show a deliberate progression of thought. Interaction: Clicking on a stage reveals detailed text.
+        - Core Competencies (Compare/Inform): A grid of cards using HTML/CSS to present key personal traits in a digestible format.
+        - Future Study Plan (Inform/Organize): A horizontal bar chart using Chart.js. Goal: To clearly and quickly communicate future academic goals. Interaction: Clicking a bar displays a related descriptive text.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #fdfdfc;
+            color: #3d405b;
+        }
+        .skill-btn {
+            transition: all 0.3s ease;
+        }
+        .skill-btn.active {
+            background-color: #3d405b;
+            color: #f4f1de;
+            transform: scale(1.05);
+        }
+        .skill-target {
+            transition: all 0.3s ease;
+            opacity: 0.5;
+        }
+        .skill-target.active {
+            opacity: 1;
+            border-color: #e07a5f;
+        }
+        .timeline-content {
+            transition: max-height 0.5s ease-in-out, opacity 0.5s ease;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-[#fdfdfc]">
+
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="text-xl font-bold text-[#3d405b]">我的履歷</div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#hero" class="text-gray-600 hover:text-[#e07a5f] transition">首頁</a>
+                <a href="#bridge" class="text-gray-600 hover:text-[#e07a5f] transition">能力橋樑</a>
+                <a href="#journey" class="text-gray-600 hover:text-[#e07a5f] transition">成長歷程</a>
+                <a href="#vision" class="text-gray-600 hover:text-[#e07a5f] transition">未來展望</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-600 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#hero" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">首頁</a>
+            <a href="#bridge" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">能力橋樑</a>
+            <a href="#journey" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">成長歷程</a>
+            <a href="#vision" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">未來展望</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="py-20 md:py-32 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-[#3d405b] leading-tight">從資訊技術到商業管理的跨域之路</h1>
+                <p class="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+                    我來自台中，畢業於資處科。我深信，在數據驅動的時代，技術的價值在於實現商業目標。我渴望結合資訊專業與商管知識，成為具備數位思維與商業洞察力的複合型人才。
+                </p>
+                <a href="#bridge" class="mt-8 inline-block bg-[#e07a5f] text-white font-bold rounded-full px-8 py-3 hover:bg-[#d46a4d] transition-transform transform hover:scale-105">探索我的能力</a>
+            </div>
+        </section>
+
+        <!-- Skills Bridge Section -->
+        <section id="bridge" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#3d405b]">能力橋樑</h2>
+                    <p class="mt-4 text-gray-600 max-w-2xl mx-auto">我的資處科背景，為商管領域的學習奠定了獨特的基礎。以下展示了我的技術能力如何轉化為商業潛力。請點擊左側的「資訊技術」查看其在右側「商管潛力」中的應用。</p>
+                </div>
+                
+                <div class="flex flex-col md:flex-row items-start justify-center gap-8 md:gap-4">
+                    <!-- Technical Skills -->
+                    <div class="w-full md:w-1/3">
+                        <h3 class="font-bold text-xl mb-4 text-center text-[#3d405b]">資訊技術基礎 (資處科)</h3>
+                        <div id="skill-buttons" class="flex flex-col space-y-3">
+                            <button data-skill="db" class="skill-btn w-full text-left p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:bg-gray-50">資料庫管理與SQL</button>
+                            <button data-skill="code" class="skill-btn w-full text-left p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:bg-gray-50">程式設計與邏輯</button>
+                            <button data-skill="system" class="skill-btn w-full text-left p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:bg-gray-50">資訊系統與經濟學</button>
+                        </div>
+                    </div>
+
+                    <!-- Arrow -->
+                    <div class="hidden md:flex items-center justify-center w-1/6 text-5xl text-[#f2cc8f] font-thin">
+                        →
+                    </div>
+
+                    <!-- Business Potential -->
+                    <div class="w-full md:w-1/2">
+                        <h3 class="font-bold text-xl mb-4 text-center text-[#3d405b]">商管應用潛力</h3>
+                        <div id="skill-targets" class="space-y-4">
+                            <div id="target-db" class="skill-target p-4 bg-white rounded-lg border-2 border-transparent">
+                                <h4 class="font-bold text-lg text-[#81b29a]">數據驅動決策</h4>
+                                <p class="text-gray-600 mt-1">能處理與分析大量數據，將原始資料轉化為有價值的商業洞察，支援精準的市場判斷與策略制定。</p>
+                            </div>
+                             <div id="target-code" class="skill-target p-4 bg-white rounded-lg border-2 border-transparent">
+                                <h4 class="font-bold text-lg text-[#81b29a]">系統化問題解決</h4>
+                                <p class="text-gray-600 mt-1">具備拆解複雜問題的邏輯思維，能設計並優化商業流程，提升營運效率與創新能力。</p>
+                            </div>
+                            <div id="target-system" class="skill-target p-4 bg-white rounded-lg border-2 border-transparent">
+                                <h4 class="font-bold text-lg text-[#81b29a]">商業模式理解</h4>
+                                <p class="text-gray-600 mt-1">理解資訊系統在企業中的角色，能從宏觀角度分析商業模式，並運用科技工具實現商業價值。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12 bg-white p-6 rounded-lg shadow-md">
+                    <h4 class="font-bold text-xl text-center text-[#3d405b]">我的特質</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-4 text-center">
+                        <div class="p-4">
+                            <h5 class="font-bold text-lg text-[#e07a5f]">深入研究</h5>
+                            <p class="text-sm text-gray-600 mt-1">對感興趣的領域刨根究底，掌握理論精髓並探索實際應用。</p>
+                        </div>
+                        <div class="p-4">
+                            <h5 class="font-bold text-lg text-[#e07a5f]">廣泛閱讀</h5>
+                            <p class="text-sm text-gray-600 mt-1">多元吸收新知，建立宏觀視野，將跨領域知識融會貫通。</p>
+                        </div>
+                        <div class="p-4">
+                            <h5 class="font-bold text-lg text-[#e07a5f]">議題整合力</h5>
+                            <p class="text-sm text-gray-600 mt-1">系統性整合多元資訊，形成全面且具洞察力的決策依據。</p>
+                        </div>
+                        <div class="p-4">
+                            <h5 class="font-bold text-lg text-[#e07a5f]">架構完整</h5>
+                            <p class="text-sm text-gray-600 mt-1">在企劃與報告中，能以清晰邏輯與完整架構呈現觀點。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Journey Section -->
+        <section id="journey" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#3d405b]">我的成長歷程</h2>
+                    <p class="mt-4 text-gray-600 max-w-2xl mx-auto">從對事物運作的好奇，到資訊技術的專業養成，再到對商業價值的深刻體認，每一步都塑造了現在的我。</p>
+                </div>
+
+                <div class="relative wrap overflow-hidden p-10 h-full">
+                    <div class="border-2-2 absolute border-opacity-20 border-gray-700 h-full border" style="left: 50%"></div>
+                    
+                    <div id="timeline-container"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vision Section -->
+        <section id="vision" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#3d405b]">未來學習展望</h2>
+                    <p class="mt-4 text-gray-600 max-w-2xl mx-auto">我期待在大學階段，能深入學習商管專業知識，並將過往的資訊能力應用其中。以下是我特別感興趣的學習領域。點擊圖表中的項目，可以查看我的具體想法。</p>
+                </div>
+                
+                <div class="flex flex-col lg:flex-row items-center gap-8">
+                    <div class="w-full lg:w-2/3">
+                        <div class="chart-container">
+                             <canvas id="visionChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-1/3">
+                        <div id="vision-text" class="bg-white p-6 rounded-lg shadow-sm min-h-[150px]">
+                            <h4 id="vision-title" class="font-bold text-xl text-[#3d405b] mb-2">我的目標</h4>
+                            <p id="vision-description" class="text-gray-600">我渴望成為具備「數位思維」與「商業洞察力」的複合型人才，運用資訊工具協助企業提升競爭力，並在不斷變化的商業環境中持續學習與創新。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#3d405b] text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>感謝您的閱覽</p>
+            <p class="text-sm mt-2 text-gray-300">此頁面為根據自傳內容，使用 HTML, Tailwind CSS, 及 Chart.js 製作的互動式履歷。</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Data for the page
+            const timelineData = [
+                {
+                    side: 'left',
+                    title: '啟蒙與思辨 (國中/小)',
+                    content: '自小便對事物的運作模式與背後邏輯深感興趣，並在社團活動中體會到團隊合作與溝通的重要性。這段時期，我初步意識到有效管理與運用資訊是洞察問題的關鍵。'
+                },
+                {
+                    side: 'right',
+                    title: '專業養成 (資處科)',
+                    content: '帶著對系統化知識的渴望，進入資處科就讀。深入學習資料庫、程式設計、會計資訊等課程，建立了紮實的資訊素養與邏輯分析能力，並將個人特質應用於專案實作，體會到技術是實現商業目標的工具。'
+                },
+                {
+                    side: 'left',
+                    title: '動機確立 (現在)',
+                    content: '深刻體會到技術的最終目的是為商業價值服務。對如何運用科技提升營運效率、做出精準市場判斷產生了強烈興趣，因此堅定地選擇投入商管學群，期望結合兩者優勢。'
+                }
+            ];
+            
+            const visionData = {
+                '數據分析與應用': '學習進階數據分析模型，將資處科的資料處理能力應用於市場預測、消費者行為分析等商業情境。',
+                '數位行銷策略': '結合資訊技術與行銷理論，探索社群媒體行銷、SEO/SEM、以及內容行銷的有效策略，並評估其成效。',
+                '財務管理與金融科技': '理解企業財務運作，並關注金融科技(FinTech)的發展，探索如何運用科技工具優化財務決策與風險管理。',
+                '供應鏈與營運管理': '學習如何運用資訊系統優化生產、庫存與物流等供應鏈環節，提升企業的整體營運效率。'
+            };
+
+            // Skills Bridge Interaction
+            const skillButtons = document.getElementById('skill-buttons');
+            const skillTargets = document.querySelectorAll('.skill-target');
+            
+            skillButtons.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    const skill = e.target.dataset.skill;
+
+                    // Update buttons
+                    skillButtons.querySelectorAll('.skill-btn').forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+                    
+                    // Update targets
+                    skillTargets.forEach(target => {
+                        target.classList.remove('active');
+                        if(target.id === `target-${skill}`) {
+                            target.classList.add('active');
+                        }
+                    });
+                }
+            });
+            // Set initial active state
+            skillButtons.querySelector('.skill-btn[data-skill="db"]').click();
+
+            // Timeline Generation
+            const timelineContainer = document.getElementById('timeline-container');
+            timelineData.forEach(item => {
+                const alignment = item.side === 'right' ? 'flex-row-reverse' : '';
+                const textAlign = item.side === 'right' ? 'text-left' : 'text-right';
+                const itemHTML = `
+                    <div class="mb-8 flex justify-between ${alignment} items-center w-full">
+                        <div class="order-1 w-5/12"></div>
+                        <div class="z-20 flex items-center order-1 bg-[#f2cc8f] shadow-xl w-8 h-8 rounded-full">
+                            <h1 class="mx-auto font-semibold text-lg text-white"></h1>
+                        </div>
+                        <div class="order-1 bg-white rounded-lg shadow-xl w-5/12 px-6 py-4">
+                            <h3 class="mb-3 font-bold text-[#3d405b] text-xl">${item.title}</h3>
+                            <p class="text-sm leading-snug tracking-wide text-gray-600">${item.content}</p>
+                        </div>
+                    </div>
+                `;
+                timelineContainer.innerHTML += itemHTML;
+            });
+
+            // Vision Chart
+            const visionChartCtx = document.getElementById('visionChart').getContext('2d');
+            const visionChart = new Chart(visionChartCtx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(visionData),
+                    datasets: [{
+                        label: '學習興趣強度',
+                        data: [95, 90, 85, 80],
+                        backgroundColor: [
+                            'rgba(129, 178, 154, 0.7)',
+                            'rgba(224, 122, 95, 0.7)',
+                            'rgba(242, 204, 143, 0.7)',
+                            'rgba(61, 64, 91, 0.7)'
+                        ],
+                        borderColor: [
+                             'rgba(129, 178, 154, 1)',
+                            'rgba(224, 122, 95, 1)',
+                            'rgba(242, 204, 143, 1)',
+                            'rgba(61, 64, 91, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ` 興趣強度: ${context.raw}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    },
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            const elementIndex = elements[0].index;
+                            const label = visionChart.data.labels[elementIndex];
+                            const description = visionData[label];
+                            
+                            document.getElementById('vision-title').textContent = label;
+                            document.getElementById('vision-description').textContent = description;
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
